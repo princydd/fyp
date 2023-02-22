@@ -1,0 +1,72 @@
+<div class="metric">
+
+	<div class="metric-header">
+		<div *ngIf="widgetMode" class="title">
+			Metrics
+		</div>
+		<div class="display-info" (click)="_displayed=!_displayed">
+			<span class="fa {{(_displayed) ? 'fa-caret-down' : 'fa-caret-right'}} icon"></span>
+			{{selectedAggregation}}
+			<span *ngIf="selectedAggregation==='count'"> - {{index}}</span>
+			<span *ngIf="selectedAggregation!=='count'"> - {{selectedField}}</span>
+		</div>
+		<div class="remove" (click)="triggerRemoveEvent()">
+			<span class="fa fa-trash-o"></span>
+		</div>
+	</div>
+
+	<div *ngIf="_displayed" class="metric-body">
+		<div class="metric-opt">
+			<span>Aggregation:</span>
+			<select
+				[(ngModel)]="selectedAggregation"
+				(change)="dataChangeEvent()">
+				<option
+					*ngFor="let aggregation of aggregationsArr"
+					[value]="aggregation.value">
+						{{aggregation.label}}
+				</option>
+			</select>
+		</div>
+
+		<div *ngIf="_numFields.length>0 && isNumFieldAgg()" class="metric-opt">
+			<span>Field:</span>
+			<select
+				[(ngModel)]="selectedField"
+				(change)="dataChangeEvent()">
+				<option
+					*ngFor="let field of getFields()"
+					[value]="field">
+						{{field}}
+				</option>
+			</select>
+		</div>
+
+		<div *ngIf="selectedAggregation==='percentiles'">
+			<percentiles-metric
+				[savedData]="savedData"
+				(dataChange)="dataChangeEvent()">
+			</percentiles-metric>
+		</div>
+
+		<div *ngIf="selectedAggregation==='percentile_ranks'">
+			<percentileRanks-metric
+				[savedData]="savedData"
+				(dataChange)="dataChangeEvent()">
+			</percentileRanks-metric>
+		</div>
+
+		<div *ngIf="selectedAggregation==='top_hits'">
+			<topHit-metric
+				[selectedFieldData]="getTopHitsFieldData()"
+				[savedData]="savedData"
+				[fields]="getAllFields()"
+				(dataChange)="dataChangeEvent()">
+			</topHit-metric>
+		</div>
+
+		<!--<div>
+			<button (click)="debug()">Debug</button>
+		</div>-->
+	</div>
+</div>

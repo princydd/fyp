@@ -1,0 +1,22 @@
+<div class="container">
+	<div>
+		<div class="section-title" (click)="_displaySavedDash = !_displaySavedDash">
+			Saved Dashboards
+		</div>
+		<div class="saved-dash section-content" *ngIf="_displaySavedDash">
+			<ul>
+				<li *ngFor="let dashboard of _savedDashboards">
+					<div class="option-container">
+						<div class="title-container" (click)="_loadDashboard(dashboard)">
+							<span>{{dashboard._source.title}}</span>
+						</div>
+						<div class="delete-icon-container" (click)="_deleteDashboard(dashboard._source.title)">
+							<span class="fa fa-trash-o"></span>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<dashboard></dashboard>
+</div>

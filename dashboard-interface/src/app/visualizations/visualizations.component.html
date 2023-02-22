@@ -1,0 +1,62 @@
+<div class="main">
+	<div *ngIf="!dashMode">
+		<div class="section-title" (click)="_displaySavedVis = !_displaySavedVis">
+			Saved Visualizations
+		</div>
+		<div class="saved-vis section-content" *ngIf="_displaySavedVis">
+			<ul>
+				<li *ngFor="let visualization of savedVisualizations">
+					<div class="option-container">
+						<div class="title-container" (click)="_loadVis(visualization)">
+							<span>{{visualization._source.title}}</span>
+						</div>
+						<div class="delete-icon-container" (click)="_deleteVis(visualization._source.title)">
+							<span class="fa fa-trash-o"></span>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div style="height: 100%; background-color: white">
+		<div class="section-title" *ngIf="!dashMode" (click)="_displayVisOpt = !_displayVisOpt">
+			<span>Visualization Options - {{_selectedIndex}}</span><span *ngIf="_selectedVisualization"> - {{_selectedVisualization}}</span>
+		</div>
+
+		<div id="visOptions" class="section-content" *ngIf="_displayVisOpt">
+			<div id="indexOpt">
+				<span>Index:</span>
+				<select
+					#index
+					[(ngModel)]="_selectedIndex"
+					(change)="onIndexChange(index.value)">
+					<option
+						*ngFor="let index of indexes"
+						[value]="index">
+							{{index}}
+					</option>
+				</select>
+			</div>
+
+			<div id="visOpt" *ngIf="!dashMode">
+				<span>Visualization:</span>
+				<select
+					[(ngModel)]="_selectedVisualization"
+					(change)="onVisChange()">
+					<option
+						*ngFor="let visualization of visualizations"
+						[value]="visualization">
+							{{visualization}}
+					</option>
+				</select>
+			</div>
+		</div>
+
+		<dynamic-component
+			[componentType]="_cmpType"
+			(event)="onEvent($event)"
+			(init)="onDynCmpInit()">
+		</dynamic-component>
+	</div>
+</div>

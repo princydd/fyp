@@ -1,0 +1,37 @@
+<div>
+	<div class="metric-opt">
+		<!--<form novalidate [formGroup]="form">
+			<input
+				#percentileRanks
+				formControlName="percentileRanks"
+				type="number"
+			/>
+		</form>
+		<span
+			*ngIf="formErrors.percentileRanks">
+			{{ formErrors.percentileRanks }}
+		</span>
+		<div *ngIf="!formErrors.percentileRanks">
+			<button (click)="addPercentileRank(percentileRanks.value)">
+				Add
+			</button>
+		</div>-->
+		<span class="opt-title">Percentile:</span>
+		<div class="add-percentile-rank">
+			<div class="input">
+				<input
+					#percentileRanks
+					type="number"
+				/>
+			</div>
+			<div class="icon" (click)="addPercentileRank(percentileRanks.value)">
+				<span class="fa fa-plus"></span>
+			</div>
+		</div>
+	</div>
+	<div>
+		<span *ngFor="let value of percentileRankValues">
+			{{'[' + value + ']'}}
+		</span>
+	</div>
+</div>
